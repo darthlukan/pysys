@@ -11,14 +11,15 @@
 import os
 import sys
 import time
-import shutil
-import glob
+import shutil # Somebody did the file work for you >.>
+import glob   # Because Python isn't zsh
 
 def next_task():
+    # Because I'm lazy...
     print 'TODO'
 
 class Backups:
-
+    # Build a worker function like a good little script kiddie
     def archive_bak(self, path):
         archivePath = path + '/backups/archives'
         if os.path.exists(archivePath) == 'True':
@@ -27,6 +28,29 @@ class Backups:
                 shutil.move(filename, archivePath)
                 print 'Archive migration complete!'
                 next_task()
+        elif os.path.exists(archivePath) == 'False':
+            print '~/backups/archives does not exist!'
+            createArchPath = raw_input('Create the backup dir for archives?(y/n): ')
+            if createArchPath == 'y':
+                os.execute('mkdir -r ~/backups/archives')
+                archive_bak(self, path)
+            elif createArchPath == 'n':
+                print "'skip' or 'exit'?"
+                cont = raw_input('Which is it?: ')
+                if cont == 'skip':
+                    print 'Skipping archive backup...'
+                    next_task()
+                elif cont == 'exit':
+                    print 'You must be a Windows user... Ass...'
+                    exit('All work and no play makes me throw holy hand grenades.')
+                else:
+                    exit('You suck.')
+            else:
+                print 'There was a problem, probably PEBKAC again...'
+                exit('L2TYPE')
+        else:
+            print 'Bad voodoo follows you, goodbye.'
+            exit('Something in archive_bak() is B0RK3D!')
 
     def image_bak(self, path):
         imagePath = path + '/backups/images'
@@ -59,8 +83,7 @@ class Backups:
             print 'It\'s not you, it\'s me.  No, it\'s definitely you...'
             exit('Error in image_bak().  Fix me please!')
 
-
-
+# Get rid of this awful mess please...
 def get_username(username):
     username = raw_input('what is your username?: ')
     return username
