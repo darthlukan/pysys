@@ -79,7 +79,7 @@ class Backups:
             for filename in glob.glob(os.path.join(path, '*.rar')):
                 shutil.move(filename, archivePath)
                 print 'Archive migration complete!'
-                self.next_task(path)
+            self.next_task(path)
         elif os.path.exists(archivePath) == False:
             print '~/backups/archives does not exist!'
             createArchPath = raw_input('Create the backup dir for archives?(y/n): ')
@@ -111,7 +111,7 @@ class Backups:
             for filename in glob.glob(os.path.join(path, '*.png')):
                 shutil.move(filename, imagePath)
                 print 'Image moving complete!'
-                self.next_task(path)
+            self.next_task(path)
         elif os.path.exists(imagePath) == False:
             print '~/backups/images does not exist!'
             createImagePath = raw_input('Create the backup dir for images?(y/n): ')
@@ -142,7 +142,7 @@ class Backups:
             for filename in glob.glob(os.path.join(path, '*.avi')):
                 shutil.move(filename, vidPath)
                 print 'Video moving complete!'
-                self.next_task(path)
+            self.next_task(path)
         elif os.path.exists(vidPath) == False:
             print '~/backups/vidoes does not exist!'
             createVidPath = raw_input('Create the backup dir for videos?(y/n): ')
@@ -174,7 +174,7 @@ class Backups:
             for filename in glob.glob(os.path.join(path, '*.doc')):
                 shutil.move(filename, docPath)
                 print 'Doc moving complete!'
-                self.next_task(path)
+            self.next_task(path)
         elif os.path.exists(vidPath) == False:
             print '~/backups/docs does not exist!'
             createVidPath = raw_input('Create the backup dir for docs?(y/n): ')
@@ -206,7 +206,7 @@ class Backups:
             for filename in glob.glob(os.path.join(path, '*.mp3')):
                 shutil.move(filename, musicPath)
                 print 'Music moving complete!'
-                self.next_task(path)
+            self.next_task(path)
         elif os.path.exists(musicPath) == False:
             print '~/backups/music does not exist!'
             createMusicPath = raw_input('Create the backup dir for music?(y/n): ')
