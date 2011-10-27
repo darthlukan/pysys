@@ -1,4 +1,4 @@
-#!/usr/bin/getenv python2
+#!/usr/bin/python2
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # Filename: backuprep.py                                                      #
 # Author: Brian Tomlinson <darthlukan@gmail.com>                              #
@@ -45,39 +45,33 @@ class Backups:
         choice = input('Enter the numerical choice: ')
         if choice == 1:
             print 'Backing up images from ~/ ...'
-            print 'Only .png is supported at this time.'
+            print 'Only .png files are supported at this time.'
             self.image_bak(path)
         elif choice == 2:
             print 'Backing up videos from ~/ ...'
-            print 'Feature not yet implemented.'
-            #vid_bak(path)
-            menuReturn = raw_input('Do you want to return to the main menu?(y/n): ')
-            if menuReturn == 'y':
-                self.next_task(path)
-            elif menuReturn == 'n':
-                print 'Okay...'
-                exit('Clean exit from next vid_bak() placeholder.')
-            else:
-                print 'There was a problem with your input.'
-                exit('Bad exit from vid_bak() placeholder.')
+            print 'Only .avi files are supported at this time.'
+            self.vid_bak(path)
         elif choice == 3:
             print 'Backing up music from ~/ ...'
-            print 'Feature not yet implemented.'
-            #vid_bak(path)
-            menuReturn = raw_input('Do you want to return to the main menu?(y/n): ')
-            if menuReturn == 'y':
-                self.next_task(path)
-            elif menuReturn == 'n':
-                print 'Okay...'
-                exit('Clean exit from next music_bak() placeholder.')
-            else:
-                print 'There was a problem with your input.'
-                exit('Bad exit from music_bak() placeholder.')
+            print 'Only .mp3 files are supported at this time.'
+            self.music_bak(path)
         elif choice == 4:
             print 'Backing up archives from ~/ ...'
+            print 'Only .rar files are supported at this time.'
             self.archive_bak(path)
+        elif choice == 5:
+            print 'Backing up documents from ~/ ...'
+            print 'Only .doc files are supported at this time.'
+        elif choice == 6:
+            print 'Routing you to advanced backup functions...'
+            print 'Warning! There be dragons ahead!'
+            print 'Feature not yet implemented.'
+            self.misc_bak(path)
+        else:
+            print 'Initiating clean exit.'
+            exit(0)
 
-    # Build a worker function like a good little script kiddie
+    # Build a worker function, this is getting repetitive...
     def archive_bak(self, path):
         archivePath = path + '/backups/archives'
         if os.path.exists(archivePath) == True:
@@ -85,7 +79,7 @@ class Backups:
             for filename in glob.glob(os.path.join(path, '*.rar')):
                 shutil.move(filename, archivePath)
                 print 'Archive migration complete!'
-                self.next_task()
+                self.next_task(path)
         elif os.path.exists(archivePath) == False:
             print '~/backups/archives does not exist!'
             createArchPath = raw_input('Create the backup dir for archives?(y/n): ')
@@ -97,7 +91,7 @@ class Backups:
                 cont = raw_input('Which is it?: ')
                 if cont == 'skip':
                     print 'Skipping archive backup...'
-                    self.next_task()
+                    self.next_task(path)
                 elif cont == 'exit':
                     print 'You must be a Windows user... Ass...'
                     exit('All work and no play makes me throw holy hand grenades.')
@@ -129,7 +123,7 @@ class Backups:
                 cont = raw_input('Which is it?: ')
                 if cont == 'skip':
                     print 'Skipping image backup...'
-                    self.next_task()
+                    self.next_task(path)
                 elif cont == 'exit':
                     print 'You\'re a douche for running me this far...'
                     exit('Make up your mind next time!')
@@ -141,9 +135,110 @@ class Backups:
             print 'It\'s not you, it\'s me.  No, it\'s definitely you...'
             exit('Error in image_bak().  Fix me please!')
 
-# Get rid of this awful mess please...
+    def vid_bak(self, path):
+        vidPath = path + '/backups/videos'
+        if os.path.exists(vidPath) == True:
+            print 'Moving videos to ~/backups/videos now ...'
+            for filename in glob.glob(os.path.join(path, '*.avi')):
+                shutil.move(filename, vidPath)
+                print 'Video moving complete!'
+                self.next_task(path)
+        elif os.path.exists(vidPath) == False:
+            print '~/backups/vidoes does not exist!'
+            createVidPath = raw_input('Create the backup dir for videos?(y/n): ')
+            if createVidPath == 'y':
+                os.makedirs(vidPath)
+                self.vid_bak(self, path)
+            elif createVidPath == 'n':
+                print "'skip' or 'exit'?"
+                cont = raw_input('Which is it?: ')
+                if cont == 'skip':
+                    print 'Skipping video backup...'
+                    self.next_task(path)
+                elif cont == 'exit':
+                    print 'This is why we can\'t have nice things...'
+                    exit('Goodbye!')
+                else:
+                    exit('No, really, there are only two options...')
+            else:
+                print 'There was an error in your input.'
+                print 'Sending you back to the main menu...'
+        else:
+            print 'Something went horribly wrong, raising exit()'
+            exit('Error in vid_bak(), a little love would be nice...')
+
+    def doc_bak(self, path):
+        docPath = path + '/backups/docs'
+        if os.path.exists(docPath) == True:
+            print 'Moving docs to ~/backups/docs now ...'
+            for filename in glob.glob(os.path.join(path, '*.doc')):
+                shutil.move(filename, docPath)
+                print 'Doc moving complete!'
+                self.next_task(path)
+        elif os.path.exists(vidPath) == False:
+            print '~/backups/docs does not exist!'
+            createVidPath = raw_input('Create the backup dir for docs?(y/n): ')
+            if createDocPath == 'y':
+                os.makedirs(docPath)
+                self.doc_bak(self, path)
+            elif createDocPath == 'n':
+                print "'skip' or 'exit'?"
+                cont = raw_input('Which is it?: ')
+                if cont == 'skip':
+                    print 'Skipping doc backup...'
+                    self.next_task(path)
+                elif cont == 'exit':
+                    print 'This is why we can\'t have nice things...'
+                    exit('Goodbye!')
+                else:
+                    exit('No, really, there are only two options...')
+            else:
+                print 'There was an error in your input.'
+                print 'Sending you back to the main menu...'
+        else:
+            print 'Something went horribly wrong, raising exit()'
+            exit('Error in doc_bak(), a little love would be nice...')
+
+    def music_bak(self, path):
+        musicPath = path + '/backups/music'
+        if os.path.exists(musicPath) == True:
+            print 'Moving music to ~/backups/music now ...'
+            for filename in glob.glob(os.path.join(path, '*.mp3')):
+                shutil.move(filename, musicPath)
+                print 'Music moving complete!'
+                self.next_task(path)
+        elif os.path.exists(musicPath) == False:
+            print '~/backups/music does not exist!'
+            createMusicPath = raw_input('Create the backup dir for music?(y/n): ')
+            if createMusicPath == 'y':
+                os.makedirs(musicPath)
+                self.music_bak(self, path)
+            elif createMusicPath == 'n':
+                print "'skip' or 'exit'?"
+                cont = raw_input('Which is it?: ')
+                if cont == 'skip':
+                    print 'Skipping music backup...'
+                    self.next_task(path)
+                elif cont == 'exit':
+                    print 'This is why we can\'t have nice things...'
+                    exit('Goodbye!')
+                else:
+                    exit('No, really, there are only two options...')
+            else:
+                print 'There was an error in your input.'
+                print 'Sending you back to the main menu...'
+        else:
+            print 'Something went horribly wrong, raising exit()'
+            exit('Error in music_bak(), a little love would be nice...')
+
+    def misc_bak(self, path):
+        # TODO
+        print 'TODO, sending you back to the main menu.'
+        self.next_task(path)
+
+# Not the most elegant solution...
 def main():
-    # Initialize problem children to avoid scope errors...
+    # There has to be a better way...
     user = os.getlogin()
     path = '/home/' + user
 
