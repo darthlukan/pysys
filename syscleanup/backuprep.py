@@ -14,11 +14,68 @@ import time
 import shutil # Somebody did the file work for you >.>
 import glob   # Because Python isn't zsh
 
-def next_task():
-    # Because I'm lazy...
-    print 'TODO'
-
+# Primary Class, wheeee!
 class Backups:
+    def next_task(self, path):
+        print '======================'
+        print '=Basic Backup Options='
+        print '======================'
+        print ''
+        print '1. Images'
+        print '2. Videos'
+        print '3. Music'
+        print '4. Archives'
+        print '5. Documents'
+        print ''
+        print '======================'
+        print '  =Advanced Options=  '
+        print '======================'
+        print ''
+        print '6. Back up Misc files'
+        print ''
+        print '======================'
+        print '       =Exit=         '
+        print '======================'
+        print ''
+        print '0. Exit'
+        print ''
+        print '======================'
+
+        choice = input('Enter the numerical choice: ')
+        if choice == 1:
+            print 'Backing up images from ~/ ...'
+            print 'Only .png is supported at this time.'
+            image_bak(path)
+        elif choice == 2:
+            print 'Backing up videos from ~/ ...'
+            print 'Feature not yet implemented.'
+            #vid_bak(path)
+            menuReturn = raw_input('Do you want to return to the main menu?(y/n): ')
+            if menuReturn == 'y':
+                next_task(path)
+            elif menuReturn == 'n':
+                print 'Okay...'
+                exit('Clean exit from next vid_bak() placeholder.')
+            else:
+                print 'There was a problem with your input.'
+                exit('Bad exit from vid_bak() placeholder.')
+        elif choice == 3:
+            print 'Backing up music from ~/ ...'
+            print 'Feature not yet implemented.'
+            #vid_bak(path)
+            menuReturn = raw_input('Do you want to return to the main menu?(y/n): ')
+            if menuReturn == 'y':
+                next_task(path)
+            elif menuReturn == 'n':
+                print 'Okay...'
+                exit('Clean exit from next music_bak() placeholder.')
+            else:
+                print 'There was a problem with your input.'
+                exit('Bad exit from music_bak() placeholder.')
+        elif choice == 4:
+            print 'Backing up archives from ~/ ...'
+            archive_bak(path)
+
     # Build a worker function like a good little script kiddie
     def archive_bak(self, path):
         archivePath = path + '/backups/archives'
@@ -52,7 +109,7 @@ class Backups:
             print 'Bad voodoo follows you, goodbye.'
             exit('Something in archive_bak() is B0RK3D!')
 
-    def image_bak(self, path):
+    def image_bak(self):
         imagePath = path + '/backups/images'
         if os.path.exists(imagePath) == 'True':
             print 'Moving images to ~/backups/images now ...'
@@ -83,27 +140,33 @@ class Backups:
             print 'It\'s not you, it\'s me.  No, it\'s definitely you...'
             exit('Error in image_bak().  Fix me please!')
 
+# Do work, after main() calls you....
+
 # Get rid of this awful mess please...
-def get_username(username):
+def get_username():
     username = raw_input('what is your username?: ')
     return username
 
-def get_path(path):
+def get_path():
     path = raw_input('Enter your path (/home/username): ')
     return path
 
-def get_permission(consent):
+def get_permission():
     consent = raw_input('Ready to begin? (y/n): ')
     if consent == 'y':
         print 'Okay then!'
         print 'Next function not yet defined.'
 
 def main():
+    # Initialize problem children to avoid scope errors...
+    username = ''
+    path = ''
+    consent = ''
     # Some cheezy functions until I put something better there
-    get_username(username)
-    get_path(path)
-    get_permission(consent)
-
+    get_username()
+    get_path()
+    get_permission()
+    Backups.next_task(path)
 # Let's get rolling
 if __name__ == '__main__':
     main()
