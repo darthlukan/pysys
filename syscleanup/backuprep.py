@@ -17,6 +17,10 @@ import glob   # Because Python isn't zsh
 # Primary Class, wheeee!
 class Backups:
 
+    """ Backups class assumes that you have ~/backups directory populated with
+    directories named 'images', 'videos', 'music', 'archives', and 'docs'. Will
+    NOT overwrite files of the same name in those destination directories. """
+
     def next_task(self, path):
         print '======================'
         print '=Basic Backup Options='
@@ -71,7 +75,7 @@ class Backups:
             print 'Initiating clean exit.'
             exit(0)
 
-    # Build a worker function, this is getting repetitive...
+    # TODO: Build a worker function, this is getting repetitive...
     def archive_bak(self, path):
         archivePath = path + '/backups/archives'
         if os.path.exists(archivePath) == True:
@@ -129,7 +133,7 @@ class Backups:
                     exit('Make up your mind next time!')
                 else:
                     print '''Something happened that shouldn't have, check if
-                    PEBKAC is true.'''
+                    PEBKAC is true...'''
                     exit('Something\'s b0rk3d here... >.>')
         else:
             print 'It\'s not you, it\'s me.  No, it\'s definitely you...'
@@ -175,9 +179,9 @@ class Backups:
                 shutil.move(filename, docPath)
                 print 'Doc moving complete!'
             self.next_task(path)
-        elif os.path.exists(vidPath) == False:
+        elif os.path.exists(docPath) == False:
             print '~/backups/docs does not exist!'
-            createVidPath = raw_input('Create the backup dir for docs?(y/n): ')
+            createDocPath = raw_input('Create the backup dir for docs?(y/n): ')
             if createDocPath == 'y':
                 os.makedirs(docPath)
                 self.doc_bak(self, path)
@@ -232,7 +236,8 @@ class Backups:
             exit('Error in music_bak(), a little love would be nice...')
 
     def misc_bak(self, path):
-        # TODO
+        # TODO: Add advanced features for multiple file specifications and
+        # alternate directories/file types.
         print 'TODO, sending you back to the main menu.'
         self.next_task(path)
 
