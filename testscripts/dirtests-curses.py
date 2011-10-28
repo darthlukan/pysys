@@ -15,24 +15,6 @@ import shutil
 import fileinput
 import subprocess
 
-# Create a screen object and initialize it
-# myscreen = curses.initscr()
-
-# Define the screen border
-# myscreen.border(0)
-
-# Add a string at y,x coordinates
-# myscreen.addstr(12, 25, "Python curses in action!")
-
-# Refresh the screen
-# myscreen.refresh()
-
-# Wait for a character (keypress)...
-# myscreen.getch()
-
-# Exit the screen and return to the terminal
-# curses.endwin()
-
 def main():
     screen = curses.initscr()
     screen.border(0)
