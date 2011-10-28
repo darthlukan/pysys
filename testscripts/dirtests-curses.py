@@ -17,6 +17,7 @@ import subprocess
 
 def main():
     screen = curses.initscr()
+    curses.start_color()
     screen.border(0)
 
     screen.addstr(2, 2, "We will now attempt to display '/' data with df -h...")
