@@ -80,10 +80,11 @@ class Backups:
         archivePath = dirlist[0]
         if os.path.exists(archivePath) == True:
             print 'Moving archives to ~/backups/archives now ...'
-            for filename in glob.glob(os.path.join(path, archTypes)):
-                shutil.move(filename, archivePath)
-                print 'Archive migration complete!'
-            self.next_task(path, dirlist)
+            for type in archTypes:
+                for filename in glob.glob(os.path.join(path, type)):
+                    shutil.move(filename, archivePath)
+                    print 'Archive migration complete!'
+                    self.next_task(path, dirlist)
         elif os.path.exists(archivePath) == False:
             print '~/backups/archives does not exist!'
             createArchPath = raw_input('Create the backup dir for archives?(y/n): ')
@@ -113,10 +114,11 @@ class Backups:
         imagePath = dirlist[1]        
         if os.path.exists(imagePath) == True:
             print 'Moving images to ~/backups/images now ...'
-            for filename in glob.glob(os.path.join(path, imageTypes)):
-                shutil.move(filename, imagePath)
-                print 'Image moving complete!'
-            self.next_task(path, dirlist)
+            for type in imageTypes:
+                for filename in glob.glob(os.path.join(path, type)):
+                    shutil.move(filename, imagePath)
+                    print 'Image moving complete!'
+                    self.next_task(path, dirlist)
         elif os.path.exists(imagePath) == False:
             print imagePath
             print '~/backups/images does not exist!'
@@ -146,10 +148,11 @@ class Backups:
         vidPath = dirlist[2]
         if os.path.exists(vidPath) == True:
             print 'Moving videos to ~/backups/videos now ...'
-            for filename in glob.glob(os.path.join(path, vidTypes)):
-                shutil.move(filename, vidPath)
-                print 'Video moving complete!'
-            self.next_task(path, dirlist)
+            for type in vidTypes:
+                for filename in glob.glob(os.path.join(path, type)):
+                    shutil.move(filename, vidPath)
+                    print 'Video moving complete!'
+                    self.next_task(path, dirlist)
         elif os.path.exists(vidPath) == False:
             print '~/backups/vidoes does not exist!'
             createVidPath = raw_input('Create the backup dir for videos?(y/n): ')
@@ -180,10 +183,11 @@ class Backups:
         docPath = dirlist[3]
         if os.path.exists(docPath) == True:
             print 'Moving docs to ~/backups/docs now ...'
-            for filename in glob.glob(os.path.join(path, docTypes)):
-                shutil.move(filename, docPath)
-                print 'Doc moving complete!'
-            self.next_task(path, dirlist)
+            for type in docTypes:
+                for filename in glob.glob(os.path.join(path, type)):
+                    shutil.move(filename, docPath)
+                    print 'Doc moving complete!'
+                    self.next_task(path, dirlist)
         elif os.path.exists(docPath) == False:
             print '~/backups/docs does not exist!'
             createDocPath = raw_input('Create the backup dir for docs?(y/n): ')
@@ -214,10 +218,11 @@ class Backups:
         musicPath = dirlist[4]
         if os.path.exists(musicPath) == True:
             print 'Moving music to ~/backups/music now ...'
-            for filename in glob.glob(os.path.join(path, musicTypes)):
-                shutil.move(filename, musicPath)
-                print 'Music moving complete!'
-            self.next_task(path, dirlist)
+            for type in musicTypes:
+                for filename in glob.glob(os.path.join(path, type)):
+                    shutil.move(filename, musicPath)
+                    print 'Music moving complete!'
+                    self.next_task(path, dirlist)
         elif os.path.exists(musicPath) == False:
             print '~/backups/music does not exist!'
             createMusicPath = raw_input('Create the backup dir for music?(y/n): ')
