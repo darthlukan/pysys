@@ -248,8 +248,9 @@ def main():
     # There has to be a better way...
     user = os.getlogin()
     path = '/home/' + user
-    dirlist = [path + '/archives', path + '/images', path + '/videos',
-           path + '/docs', path + '/music', path + '/misc']
+    dirlist = [path + '/backups/archives', path + '/backups/images', 
+               path + '/backups/videos', path + '/backups/docs', 
+               path + '/backups/music', path + '/backups/misc']
     # Create Backups object instance. Pointer?
     bk = Backups()
 
