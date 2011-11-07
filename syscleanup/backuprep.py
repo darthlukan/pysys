@@ -47,27 +47,23 @@ class Backups:
         choice = input('Enter the numerical choice: ')
         if choice == 1:
             print 'Backing up images from ~/ ...'
-            print 'Only .png files are supported at this time.'
             self.image_bak(path, dirlist)
         elif choice == 2:
             print 'Backing up videos from ~/ ...'
-            print 'Only .avi files are supported at this time.'
             self.vid_bak(path, dirlist)
         elif choice == 3:
             print 'Backing up music from ~/ ...'
-            print 'Only .mp3 files are supported at this time.'
             self.music_bak(path, dirlist)
         elif choice == 4:
             print 'Backing up archives from ~/ ...'
-            print 'Only .rar files are supported at this time.'
             self.archive_bak(path, dirlist)
         elif choice == 5:
             print 'Backing up documents from ~/ ...'
-            print 'Only .doc files are supported at this time.'
+            self.doc_bak(path, dirlist)
         elif choice == 6:
             print 'Routing you to advanced backup functions...'
             print 'Warning! There be dragons ahead!'
-            print 'Feature not yet implemented.'
+            print 'This feature is incomplete.'
             self.misc_bak(path, dirlist)
         else:
             print 'Initiating clean exit.'
@@ -75,7 +71,7 @@ class Backups:
 
     # TODO: Build a worker function, this is getting repetitive...
     def archive_bak(self, path, dirlist):
-        archTypes = ['*.rar', '*.zip', '*.tar', '*.tar.gz', '*.tgz', 
+        archTypes = ['*.rar', '*.zip', '*.tar', '*.tar.gz', '*.tgz',
                      '*.tar.bz2', '*.tbz2', '*.bz2', '*.7z', '*.s7z']
         archivePath = dirlist[0]
         if os.path.exists(archivePath) == True:
@@ -98,7 +94,6 @@ class Backups:
                     print 'Skipping archive backup...'
                     self.next_task(path, dirlist)
                 elif cont == 'exit':
-                    print 'You must be a Windows user... Ass...'
                     exit('All work and no play makes me throw holy hand grenades.')
                 else:
                     exit('You suck.')
@@ -111,7 +106,7 @@ class Backups:
 
     def image_bak(self, path, dirlist):
         imageTypes = ['*.png', '*.jpg', '*.jpeg', '*.gif', '*.raw']
-        imagePath = dirlist[1]        
+        imagePath = dirlist[1]
         if os.path.exists(imagePath) == True:
             print 'Moving images to ~/backups/images now ...'
             for type in imageTypes:
@@ -133,14 +128,12 @@ class Backups:
                     print 'Skipping image backup...'
                     self.next_task(path, dirlist)
                 elif cont == 'exit':
-                    print 'You\'re a douche for running me this far...'
-                    exit('Make up your mind next time!')
+                    exit('...')
                 else:
                     print '''Something happened that shouldn't have, check if
                     PEBKAC is true...'''
                     exit('Something\'s b0rk3d here... >.>')
         else:
-            print 'It\'s not you, it\'s me.  No, it\'s definitely you...'
             exit('Error in image_bak().  Fix me please!')
 
     def vid_bak(self, path, dirlist):
@@ -260,8 +253,8 @@ def main():
     print 'Lists are broken, good luck...'
     user = os.getlogin()
     path = '/home/' + user
-    dirlist = [path + '/backups/archives', path + '/backups/images', 
-               path + '/backups/videos', path + '/backups/docs', 
+    dirlist = [path + '/backups/archives', path + '/backups/images',
+               path + '/backups/videos', path + '/backups/docs',
                path + '/backups/music', path + '/backups/misc']
     # Create Backups object instance. Pointer?
     bk = Backups()
