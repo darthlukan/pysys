@@ -75,12 +75,12 @@ class Backups:
 
     # TODO: Build a worker function, this is getting repetitive...
     def archive_bak(self, path, dirlist):
-        archtypes = ['*.rar', '*.zip', '*.tar', '*.tar.gz', '*.tgz', 
+        archTypes = ['*.rar', '*.zip', '*.tar', '*.tar.gz', '*.tgz', 
                      '*.tar.bz2', '*.tbz2', '*.bz2', '*.7z', '*.s7z']
         archivePath = dirlist[0]
         if os.path.exists(archivePath) == True:
             print 'Moving archives to ~/backups/archives now ...'
-            for filename in glob.glob(os.path.join(path, archtypes)):
+            for filename in glob.glob(os.path.join(path, archTypes)):
                 shutil.move(filename, archivePath)
                 print 'Archive migration complete!'
             self.next_task(path, dirlist)
@@ -109,10 +109,11 @@ class Backups:
             exit('Something in archive_bak() is B0RK3D!')
 
     def image_bak(self, path, dirlist):
-        imagePath = dirlist[1]
+        imageTypes = ['*.png', '*.jpg', '*.jpeg', '*.gif', '*.raw']
+        imagePath = dirlist[1]        
         if os.path.exists(imagePath) == True:
             print 'Moving images to ~/backups/images now ...'
-            for filename in glob.glob(os.path.join(path, '*.png')):
+            for filename in glob.glob(os.path.join(path, imageTypes)):
                 shutil.move(filename, imagePath)
                 print 'Image moving complete!'
             self.next_task(path, dirlist)
@@ -141,10 +142,11 @@ class Backups:
             exit('Error in image_bak().  Fix me please!')
 
     def vid_bak(self, path, dirlist):
+        vidTypes = ['*.mpg', '*.mp4', '*.mkv', '*.avi', '*.mpeg', '*.flv']
         vidPath = dirlist[2]
         if os.path.exists(vidPath) == True:
             print 'Moving videos to ~/backups/videos now ...'
-            for filename in glob.glob(os.path.join(path, '*.avi')):
+            for filename in glob.glob(os.path.join(path, vidTypes)):
                 shutil.move(filename, vidPath)
                 print 'Video moving complete!'
             self.next_task(path, dirlist)
@@ -174,10 +176,11 @@ class Backups:
             exit('Error in vid_bak(), a little love would be nice...')
 
     def doc_bak(self, path, dirlist):
+        docTypes = ['*.doc', '*.docx', '*.txt', '*.log', '*.odt', '*.org']
         docPath = dirlist[3]
         if os.path.exists(docPath) == True:
             print 'Moving docs to ~/backups/docs now ...'
-            for filename in glob.glob(os.path.join(path, '*.doc')):
+            for filename in glob.glob(os.path.join(path, docTypes)):
                 shutil.move(filename, docPath)
                 print 'Doc moving complete!'
             self.next_task(path, dirlist)
@@ -207,10 +210,11 @@ class Backups:
             exit('Error in doc_bak(), a little love would be nice...')
 
     def music_bak(self, path, dirlist):
+        musicTypes = ['*.mp3', '*.ogg']
         musicPath = dirlist[4]
         if os.path.exists(musicPath) == True:
             print 'Moving music to ~/backups/music now ...'
-            for filename in glob.glob(os.path.join(path, '*.mp3')):
+            for filename in glob.glob(os.path.join(path, musicTypes)):
                 shutil.move(filename, musicPath)
                 print 'Music moving complete!'
             self.next_task(path, dirlist)
