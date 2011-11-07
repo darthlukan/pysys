@@ -48,19 +48,19 @@ class Backups:
         if choice == 1:
             print 'Backing up images from ~/ ...'
             print 'Only .png files are supported at this time.'
-            self.image_bak(dirlist, path)
+            self.image_bak(path, dirlist)
         elif choice == 2:
             print 'Backing up videos from ~/ ...'
             print 'Only .avi files are supported at this time.'
-            self.vid_bak(dirlist, path)
+            self.vid_bak(path, dirlist)
         elif choice == 3:
             print 'Backing up music from ~/ ...'
             print 'Only .mp3 files are supported at this time.'
-            self.music_bak(dirlist, path)
+            self.music_bak(path, dirlist)
         elif choice == 4:
             print 'Backing up archives from ~/ ...'
             print 'Only .rar files are supported at this time.'
-            self.archive_bak(dirlist, path)
+            self.archive_bak(path, dirlist)
         elif choice == 5:
             print 'Backing up documents from ~/ ...'
             print 'Only .doc files are supported at this time.'
@@ -68,7 +68,7 @@ class Backups:
             print 'Routing you to advanced backup functions...'
             print 'Warning! There be dragons ahead!'
             print 'Feature not yet implemented.'
-            self.misc_bak(dirlist, path)
+            self.misc_bak(path, dirlist)
         else:
             print 'Initiating clean exit.'
             exit(0)
@@ -115,6 +115,7 @@ class Backups:
                 print 'Image moving complete!'
             self.next_task(path, dirlist)
         elif os.path.exists(imagePath) == False:
+            print imagePath
             print '~/backups/images does not exist!'
             createImagePath = raw_input('Create the backup dir for images?(y/n): ')
             if createImagePath == 'y':
