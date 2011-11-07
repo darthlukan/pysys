@@ -75,10 +75,12 @@ class Backups:
 
     # TODO: Build a worker function, this is getting repetitive...
     def archive_bak(self, path, dirlist):
+        archtypes = ['*.rar', '*.zip', '*.tar', '*.tar.gz', '*.tgz', 
+                     '*.tar.bz2', '*.tbz2', '*.bz2', '*.7z', '*.s7z']
         archivePath = dirlist[0]
         if os.path.exists(archivePath) == True:
             print 'Moving archives to ~/backups/archives now ...'
-            for filename in glob.glob(os.path.join(path, '*.rar')):
+            for filename in glob.glob(os.path.join(path, archtypes)):
                 shutil.move(filename, archivePath)
                 print 'Archive migration complete!'
             self.next_task(path, dirlist)
