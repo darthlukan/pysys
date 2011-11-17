@@ -251,8 +251,7 @@ class Backups:
 def main():
     # There has to be a better way...
     print 'Lists are broken, good luck...'
-    user = os.getlogin()
-    path = '/home/' + user
+    path = os.path.expanduser('~/')
     dirlist = [path + '/backups/archives', path + '/backups/images',
                path + '/backups/videos', path + '/backups/docs',
                path + '/backups/music', path + '/backups/misc']
