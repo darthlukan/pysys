@@ -5,13 +5,16 @@ Created on Sun Mar  4 15:18:31 2012
 @author: darthlukan
 """
 
-import os
 import sys
+import fileinput
 
 file = sys.argv[1]
 
 def main(file):
-    print(os.path.getsize(file))
+
+    for line in fileinput.input(file):
+        line.rstrip('\r\n')
+        print(str.lower(line))
 
 if __name__ == '__main__':
     main(file)
