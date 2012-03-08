@@ -1,10 +1,9 @@
 #!/usr/bin/env python2
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# Filename: backuprep.py                                                      #
+# Filename: BetterBackup.py                                                   #
 # Author: Brian Tomlinson <darthlukan@gmail.com>                              #
 # URL: git@github.com:darthlukan/pysys.git                                    #
-# Description: A simple backup prepper.  Sorts files based on extension into  #
-# a predefined directory tree, overwriting older versions of files by default.#
+# Description: Backup program that can create archives and disc images.       #
 # License: GPLv2, http://www.gnu.org/licenses/gpl-2.0.html                    #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # -*- coding: utf-8 -*-
