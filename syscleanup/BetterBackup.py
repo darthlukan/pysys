@@ -13,7 +13,7 @@ import sys
 import glob
 import shutil
 
-# Set our supported formats.
+''' Contains the formats that we care to work with. '''
 formats = {
     'audio': ['*.mp3', '*.ogg', '*.wav'],
     'video': ['*.mpg', '*.mp4', '*.mkv',
@@ -32,7 +32,7 @@ formats = {
 # Get the user and their $HOME
 userhome = '/home/' + os.getlogin()
 
-# Set the directories that we expect
+''' Directories that we plan to work with. '''
 dirs = {
     'home': userhome,
     'audio': userhome + '/backups/music',
@@ -43,8 +43,13 @@ dirs = {
     'misc': userhome + '/backups/misc'
     }
 
-# General backup function, WIP
 def backup_copy(op):
+    '''
+        This function does all of the moving.
+    
+        Takes a string "op" (operation) as an argument
+        which is also a key in the dirs and formats dicts.
+    '''
     backpath = dirs.get(op)
     backformats = formats.get(op)
     
@@ -55,8 +60,15 @@ def backup_copy(op):
                     shutil.move(filename, backpath)
     print('Backup of %s files complete!' % (op))
     return true            
-    
+
 def check_dirs(op):
+    '''
+        Verifies that the "op" (string) argument is actually a key
+        in the dirs dict and checks if the value
+        is an existing directory.
+    
+        @TODO: Offer to create the path if it does not exist.
+    '''
     for key, val in dirs.items():
         if key == op:
             if os.path.isdir(val):
@@ -65,7 +77,7 @@ def check_dirs(op):
                 print("That directory does not exist, would you like to create it?")
                 answer = input("Y/n: ")
                 if answer.lower() == 'y':
-                    # TODO: See line 80
+                    # TODO: See line 93
                     return create_path(op)
                 elif answer.lower() == 'n':
                     quitter()
@@ -76,10 +88,11 @@ def check_dirs(op):
             sys.exit('Logic error encountered.')
     return true
 
+# TODO: See print statement.
 def create_path():
     print('provide the option to create a non-existent dir here.')
 
-# Callers    
+# Callers. Set "op" argument
 def every():
     check_dirs('misc')
     
@@ -102,6 +115,11 @@ def quitter():
     sys.exit('Exited because of user input.')
     
 def main():
+    '''
+        Sets our commands dict with references to functions.
+        Provides "direction" logic.
+        Exits on error.
+    '''
     commands = {
             'ALL': every,
             'QUIT': quitter,
@@ -124,7 +142,6 @@ def main():
         else:
             print("%s not a recognized command." % (arg))
             sys.exit('Exiting')                
-                
 
 if __name__ == '__main__':
     main()
