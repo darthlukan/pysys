@@ -13,9 +13,6 @@ import sys
 import glob
 import shutil
 
-# Get the user and their $HOME
-userhome = '/home/' + os.getlogin()
-
 # Set our supported formats.
 formats = {
     'audio': ['*.mp3', '*.ogg', '*.wav'],
@@ -32,6 +29,9 @@ formats = {
                  '*.tbz2', '*.7z', '*.s7z']
     }
 
+# Get the user and their $HOME
+userhome = '/home/' + os.getlogin()
+
 # Set the directories that we expect
 dirs = {
     'home': userhome,
@@ -45,8 +45,16 @@ dirs = {
 
 # General backup function, WIP
 def backup_copy(op):
-    # Placeholder
-    print('Backing up')
+    backpath = dirs.get(op)
+    backformats = formats.get(op)
+    
+    downloads = dirs.get('home') + '/Downloads'
+    
+    for type in backformats:
+                for filename in glob.glob(os.path.join(downloads, type)):
+                    shutil.move(filename, backpath)
+    print('Backup of %s files complete!' % (op))
+    return true            
     
 def check_dirs(op):
     for key, val in dirs.items():
@@ -57,7 +65,8 @@ def check_dirs(op):
                 print("That directory does not exist, would you like to create it?")
                 answer = input("Y/n: ")
                 if answer.lower() == 'y':
-                    create_path(op)
+                    # TODO: See line 80
+                    return create_path(op)
                 elif answer.lower() == 'n':
                     quitter()
                 else:
@@ -65,6 +74,10 @@ def check_dirs(op):
         else:
             print('Somthing bad happened, exiting.')
             sys.exit('Logic error encountered.')
+    return true
+
+def create_path():
+    print('provide the option to create a non-existent dir here.')
 
 # Callers    
 def every():
