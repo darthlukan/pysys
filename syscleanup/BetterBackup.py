@@ -40,7 +40,9 @@ dirs = {
     'image': userhome + '/backups/images',
     'docs': userhome + '/backups/docs',
     'archives': userhome + '/backups/archives',
-    'misc': userhome + '/backups/misc'
+    'misc': [dirs['audio'], dirs['video'],
+             dirs['image'], dirs['docs'],
+             dirs['archives']]
     }
 
 def backup_copy(op):
@@ -70,14 +72,15 @@ def check_dirs(op):
         @TODO: Offer to create the path if it does not exist.
     '''
     for key, val in dirs.items():
-        if key == op:
+        if key == op and op != 'misc':
             if os.path.isdir(val):
                 backup_copy(op)
+            elif key == op and op == 'misc':
+                raise NotImplementedError
             else:
                 print("That directory does not exist, would you like to create it?")
                 answer = input("Y/n: ")
                 if answer.lower() == 'y':
-                    # TODO: See line 93
                     return create_path(op)
                 elif answer.lower() == 'n':
                     quitter()
@@ -89,10 +92,18 @@ def check_dirs(op):
     return true
 
 # TODO: See print statement.
-def create_path():
-    print('provide the option to create a non-existent dir here.')
+def create_path(op):
+    print("Creating path to %s." % (dirs.get(op)))
+    
+    try:
+        os.makedirs(dirs.get(op))
+        check_dirs(op)
+    except:
+        print('An unexpected error occurred while trying to make the directory.')
+        raise
 
 # Callers. Set "op" argument
+# TODO: This appears too repetitive to the the "right way".
 def every():
     check_dirs('misc')
     
@@ -113,7 +124,8 @@ def archs():
 
 def quitter():
     sys.exit('Exited because of user input.')
-    
+
+
 def main():
     '''
         Sets our commands dict with references to functions.
