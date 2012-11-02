@@ -17,7 +17,7 @@ def main(file):
                     print "FB",
                 else:
                     print "F",
-            elif int(number) % 5 == 0 and int(number) % 3 !=0:
+            elif int(number) % 5 == 0 and int(number) % 3 != 0:
                 print "B",
             else:
                 print number,

@@ -1,4 +1,4 @@
-#!/usr/bin/python2
+#!/usr/bin/env python2
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # Filename: backuprep.py                                                      #
 # Author: Brian Tomlinson <darthlukan@gmail.com>                              #
@@ -9,258 +9,44 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 import os
-import shutil # Somebody did the file work for you >.>
-import glob   # Because Python isn't zsh
+import sys
+import glob
+import shutil
 
-# Primary Class, wheeee!
 class Backups:
 
     """ Backups class assumes that you have ~/backups directory populated with
     directories named 'images', 'videos', 'music', 'archives', and 'docs'. Will
     NOT overwrite files of the same name in those destination directories. """
 
-    def next_task(self, path, dirlist):
-        print '======================'
-        print '=Basic Backup Options='
-        print '======================'
-        print ''
-        print '1. Images'
-        print '2. Videos'
-        print '3. Music'
-        print '4. Archives'
-        print '5. Documents'
-        print ''
-        print '======================'
-        print '  =Advanced Options=  '
-        print '======================'
-        print ''
-        print '6. Back up Misc files'
-        print ''
-        print '======================'
-        print '       =Exit=         '
-        print '======================'
-        print ''
-        print '0. Exit'
-        print ''
-        print '======================'
+    def __init__(self, path, dirlist):
+        '''Initializes default file extensions to iterate over and provides
+        commands for function calls.'''
 
-        choice = input('Enter the numerical choice: ')
-        if choice == 1:
-            print 'Backing up images from ~/ ...'
-            self.image_bak(path, dirlist)
-        elif choice == 2:
-            print 'Backing up videos from ~/ ...'
-            self.vid_bak(path, dirlist)
-        elif choice == 3:
-            print 'Backing up music from ~/ ...'
-            self.music_bak(path, dirlist)
-        elif choice == 4:
-            print 'Backing up archives from ~/ ...'
-            self.archive_bak(path, dirlist)
-        elif choice == 5:
-            print 'Backing up documents from ~/ ...'
-            self.doc_bak(path, dirlist)
-        elif choice == 6:
-            print 'Routing you to advanced backup functions...'
-            print 'Warning! There be dragons ahead!'
-            print 'This feature is incomplete.'
-            self.misc_bak(path, dirlist)
-        else:
-            print 'Initiating clean exit.'
-            exit(0)
+        self.homedir = os.path.expanduser('~')
 
-    # TODO: Build a worker function, this is getting repetitive...
-    def archive_bak(self, path, dirlist):
-        archTypes = ['*.rar', '*.zip', '*.tar', '*.tar.gz', '*.tgz',
-                     '*.tar.bz2', '*.tbz2', '*.bz2', '*.7z', '*.s7z']
-        archivePath = dirlist[0]
-        if os.path.exists(archivePath) == True:
-            print 'Moving archives to ~/backups/archives now ...'
-            for type in archTypes:
-                for filename in glob.glob(os.path.join(path, type)):
-                    shutil.move(filename, archivePath)
-                    print 'Archive migration complete!'
-                    self.next_task(path, dirlist)
-        elif os.path.exists(archivePath) == False:
-            print '~/backups/archives does not exist!'
-            createArchPath = raw_input('Create the backup dir for archives?(y/n): ')
-            if createArchPath == 'y':
-                os.makedirs(archivePath)
-                self.archive_bak(self, path, dirlist)
-            elif createArchPath == 'n':
-                print "'skip' or 'exit'?"
-                cont = raw_input('Which is it?: ')
-                if cont == 'skip':
-                    print 'Skipping archive backup...'
-                    self.next_task(path, dirlist)
-                elif cont == 'exit':
-                    exit('All work and no play makes me throw holy hand grenades.')
-                else:
-                    exit('You suck.')
-            else:
-                print 'There was a problem, probably PEBKAC again...'
-                exit('L2TYPE')
-        else:
-            print 'Bad voodoo follows you, goodbye.'
-            exit('Something in archive_bak() is B0RK3D!')
+        self.data = {'movies': ['*.mpg', '*.avi', '*.mkv'],
+                     'music': ['*.mp3', '*.wav', '*.ogg'],
+                     'docs': ['*.odt', '*.doc', '*.ods', '*.xls'],
+                     'archives': ['*.rar', '*.zip', '*.7z', '*.gz', '*.bz2']}
 
-    def image_bak(self, path, dirlist):
-        imageTypes = ['*.png', '*.jpg', '*.jpeg', '*.gif', '*.raw']
-        imagePath = dirlist[1]
-        if os.path.exists(imagePath) == True:
-            print 'Moving images to ~/backups/images now ...'
-            for type in imageTypes:
-                for filename in glob.glob(os.path.join(path, type)):
-                    shutil.move(filename, imagePath)
-                    print 'Image moving complete!'
-                    self.next_task(path, dirlist)
-        elif os.path.exists(imagePath) == False:
-            print imagePath
-            print '~/backups/images does not exist!'
-            createImagePath = raw_input('Create the backup dir for images?(y/n): ')
-            if createImagePath == 'y':
-                os.makedirs(imagePath)
-                self.image_bak(self, path, dirlist)
-            elif createImagePath == 'n':
-                print "'skip' or 'exit'?"
-                cont = raw_input('Which is it?: ')
-                if cont == 'skip':
-                    print 'Skipping image backup...'
-                    self.next_task(path, dirlist)
-                elif cont == 'exit':
-                    exit('...')
-                else:
-                    print '''Something happened that shouldn't have, check if
-                    PEBKAC is true...'''
-                    exit('Something\'s b0rk3d here... >.>')
-        else:
-            exit('Error in image_bak().  Fix me please!')
+        self.commands = {'ALL': self.all,
+                         'QUIT': self.quitter,
+                         'PICTURES': self.pics,
+                         'VIDEOS': self.vids,
+                         'MUSIC': self.snds,
+                         'DOCUMENTS': self.docs,
+                         'ARCHIVES': self.archs
+                         }
 
-    def vid_bak(self, path, dirlist):
-        vidTypes = ['*.mpg', '*.mp4', '*.mkv', '*.avi', '*.mpeg', '*.flv']
-        vidPath = dirlist[2]
-        if os.path.exists(vidPath) == True:
-            print 'Moving videos to ~/backups/videos now ...'
-            for type in vidTypes:
-                for filename in glob.glob(os.path.join(path, type)):
-                    shutil.move(filename, vidPath)
-                    print 'Video moving complete!'
-                    self.next_task(path, dirlist)
-        elif os.path.exists(vidPath) == False:
-            print '~/backups/vidoes does not exist!'
-            createVidPath = raw_input('Create the backup dir for videos?(y/n): ')
-            if createVidPath == 'y':
-                os.makedirs(vidPath)
-                self.vid_bak(self, path, dirlist)
-            elif createVidPath == 'n':
-                print "'skip' or 'exit'?"
-                cont = raw_input('Which is it?: ')
-                if cont == 'skip':
-                    print 'Skipping video backup...'
-                    self.next_task(path, dirlist)
-                elif cont == 'exit':
-                    print 'This is why we can\'t have nice things...'
-                    exit('Goodbye!')
-                else:
-                    exit('No, really, there are only two options...')
-            else:
-                print 'There was an error in your input.'
-                print 'Sending you back to the main menu...'
-                self.next_task(path, dirlist)
-        else:
-            print 'Something went horribly wrong, raising exit()'
-            exit('Error in vid_bak(), a little love would be nice...')
+    def quitter(self):
+        sys.exit(0)
 
-    def doc_bak(self, path, dirlist):
-        docTypes = ['*.doc', '*.docx', '*.txt', '*.log', '*.odt', '*.org']
-        docPath = dirlist[3]
-        if os.path.exists(docPath) == True:
-            print 'Moving docs to ~/backups/docs now ...'
-            for type in docTypes:
-                for filename in glob.glob(os.path.join(path, type)):
-                    shutil.move(filename, docPath)
-                    print 'Doc moving complete!'
-                    self.next_task(path, dirlist)
-        elif os.path.exists(docPath) == False:
-            print '~/backups/docs does not exist!'
-            createDocPath = raw_input('Create the backup dir for docs?(y/n): ')
-            if createDocPath == 'y':
-                os.makedirs(docPath)
-                self.doc_bak(self, path, dirlist)
-            elif createDocPath == 'n':
-                print "'skip' or 'exit'?"
-                cont = raw_input('Which is it?: ')
-                if cont == 'skip':
-                    print 'Skipping doc backup...'
-                    self.next_task(path, dirlist)
-                elif cont == 'exit':
-                    print 'This is why we can\'t have nice things...'
-                    exit('Goodbye!')
-                else:
-                    exit('No, really, there are only two options...')
-            else:
-                print 'There was an error in your input.'
-                print 'Sending you back to the main menu...'
-                self.next_task(path, dirlist)
-        else:
-            print 'Something went horribly wrong, raising exit()'
-            exit('Error in doc_bak(), a little love would be nice...')
+    def worker(self, todo):
+        backpath = self.homedir + '/backups'
+        types = self.data[todo]
 
-    def music_bak(self, path, dirlist):
-        musicTypes = ['*.mp3', '*.ogg']
-        musicPath = dirlist[4]
-        if os.path.exists(musicPath) == True:
-            print 'Moving music to ~/backups/music now ...'
-            for type in musicTypes:
-                for filename in glob.glob(os.path.join(path, type)):
-                    shutil.move(filename, musicPath)
-                    print 'Music moving complete!'
-                    self.next_task(path, dirlist)
-        elif os.path.exists(musicPath) == False:
-            print '~/backups/music does not exist!'
-            createMusicPath = raw_input('Create the backup dir for music?(y/n): ')
-            if createMusicPath == 'y':
-                os.makedirs(musicPath)
-                self.music_bak(self, path, dirlist)
-            elif createMusicPath == 'n':
-                print "'skip' or 'exit'?"
-                cont = raw_input('Which is it?: ')
-                if cont == 'skip':
-                    print 'Skipping music backup...'
-                    self.next_task(path)
-                elif cont == 'exit':
-                    print 'This is why we can\'t have nice things...'
-                    exit('Goodbye!')
-                else:
-                    exit('No, really, there are only two options...')
-            else:
-                print 'There was an error in your input.'
-                print 'Sending you back to the main menu...'
-                self.next_task(path, dirlist)
-        else:
-            print 'Something went horribly wrong, raising exit()'
-            exit('Error in music_bak(), a little love would be nice...')
-
-    def misc_bak(self, path, dirlist):
-        # TODO: Add advanced features for multiple file specifications and
-        # alternate directories/file types.
-        print 'TODO, sending you back to the main menu.'
-        self.next_task(path, dirlist)
-
-# Not the most elegant solution...
-def main():
-    # There has to be a better way...
-    print 'Lists are broken, good luck...'
-    path = os.path.expanduser('~/')
-    dirlist = [path + '/backups/archives', path + '/backups/images',
-               path + '/backups/videos', path + '/backups/docs',
-               path + '/backups/music', path + '/backups/misc']
-    # Create Backups object instance. Pointer?
-    bk = Backups()
-
-    # Call Backups class
-    bk.next_task(path, dirlist)
-
-# Let's get rolling
-if __name__ == '__main__':
-    main()
+        for i in types:
+            for filename in glob.glob(os.path.join(self.homedir, type)):
+                    shutil.move(filename, backpath)
+        print 'Archive migration complete!'

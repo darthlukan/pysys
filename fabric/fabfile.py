@@ -1,11 +1,18 @@
-from fabric.api import local
+from __future__ import with_statement
+from fabric.api import local, settings, abort, run, cd
+from fabric.contrib.console import confirm
+from ssh import SSHClient
 
-def hello(name='World'):
-	print("Hello %s!" % name)
+def connect_me():
+	user = 'ec2-user'
+	hosts = 'ec2-50-19-150-120.compute-1.amazonaws.com'
+	pkey = '/home/darthlukan/.ssh/testserver.pem'
+	s = SSHClient()
+	s.connect(hosts, user, pkey)	
+	view_remote_dir()
+	
+def view_remote_dir():
+	run('pwd')
 
-def view_dir():
-	local('ls -all')
-
-def main(name=''):
-	hello(name)
-	view_dir()
+def main():
+	connect_me()

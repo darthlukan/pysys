@@ -75,6 +75,7 @@ def check_dirs(op):
         if key == op and op != 'misc':
             if os.path.isdir(val):
                 backup_copy(op)
+            # TODO: handle creating all needed paths here.
             elif key == op and op == 'misc':
                 raise NotImplementedError
             else:
@@ -91,7 +92,6 @@ def check_dirs(op):
             sys.exit('Logic error encountered.')
     return true
 
-# TODO: See print statement.
 def create_path(op):
     print("Creating path to %s." % (dirs.get(op)))
     
@@ -103,7 +103,7 @@ def create_path(op):
         raise
 
 # Callers. Set "op" argument
-# TODO: This appears too repetitive to the the "right way".
+# TODO: This appears too repetitive to be the "right way".
 def every():
     check_dirs('misc')
     

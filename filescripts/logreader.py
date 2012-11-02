@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # Filename: logreader.py
 # Author: Brian Tomlinson
-# Contact: <brian.tomlinson@mcnhealthcare.com>
+# Contact: <darthlukan@gmail.com>
 # Description: A simple program that reads log output from CodeIgniter apps
 # and allows you to display and write the output to another file for reporting.
 # Note: requires Python 2.7.x
