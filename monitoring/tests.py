@@ -4,22 +4,21 @@ import pymon
 
 class TestPymonConfig(unittest.TestCase):
 
-    def setUp(self):
-        self.pc = pymon.Config()
+    #def setUp(self):
+    #    self.pc = pymon.Config()
 
     def test_get_config_file(self):
-        self.assertTrue(self.pc.get_config_file())
+        self.pc = pymon.Config()
+        #self.assertIsInstance(self.pc.config, object)
+        self.assertTrue(self.pc.config)
 
     def test_get_config_sections(self):
+        self.pc = pymon.Config()
         self.assertIsInstance(self.pc.get_config_sections(), list)
-        sections = self.pc.get_config_sections()
-        section = sections[0]
-        self.assertEqual(section, 'Test Section')
 
     def test_get_config_options(self):
+        self.pc = pymon.Config()
         self.assertIsInstance(self.pc.get_config_options(), list)
-        options = self.pc.get_config_options()
-        self.assertEqual(options[0], 'testoption')
 
 
 class TestPymonMain(unittest.TestCase):
