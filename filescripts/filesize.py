@@ -12,6 +12,7 @@ file = sys.argv[1]
 
 def main(file):
     print(os.path.getsize(file))
+    file.close()
 
 if __name__ == '__main__':
     main(file)
