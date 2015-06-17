@@ -51,9 +51,11 @@ def main():
     # explicity 'keys'.  Instead, their keys are implied by position.
     # Check above where we set uname and opsys to see how we use
     # list (position) keys.
-    example_list = ['Foo', 'Bar', 'Baz', 'Bazinga',
-		    'lists', 'can', 'hold', 'numbers',
-		    'like', 1, 2, 3, 4, 'as well.']
+    example_list = [
+        'Foo', 'Bar', 'Baz', 'Bazinga',
+		'lists', 'can', 'hold', 'numbers',
+		'like', 1, 2, 3, 4, 'as well.'
+    ]
 
     # A simple for loop.  We call an "imaginary" 'i' into being,
     # this 'i' is an 'iterator'.  It moves over each item inside of
