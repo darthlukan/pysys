@@ -12,12 +12,11 @@ file = sys.argv[1]
 def main(file):
     for line in open(file):
         for number in line.split():
-            if int(number) % 3 == 0:
-                if int(number) % 5 == 0:
-                    print "FB",
-                else:
-                    print "F",
-            elif int(number) % 5 == 0 and int(number) % 3 != 0:
+            if int(number) % 5 == 0 and int(number) % 3 == 0:
+                print "FB",
+            elif int(number) % 3 == 0:
+                print "F",
+            elif int(number) % 5 == 0:
                 print "B",
             else:
                 print number,
