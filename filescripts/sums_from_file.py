@@ -18,7 +18,7 @@ e = []
 def loops(file):
     for line in file:
         for i in line:
-            if line = file[0]:
+            if line == file[0]:
                 1nums.append(i)
             else:
                 2nums.append(i)
