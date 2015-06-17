@@ -5,7 +5,7 @@ def isPalindrome(s):
         ans = ''
         for c in s:
             if c in 'abcdefghijklmnopqrstuvwxyz':
-                ans = ans + c
+                ans += c
         return ans
 
     def isPal(s):
